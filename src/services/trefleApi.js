@@ -1,6 +1,27 @@
 import fallbackData from '../data/trefle-fallback.json'
 
-const BASE_URL = 'https://trefle.io/api/v1'
+/**
+ * @typedef {Object} TreflePlant
+ * @property {number} id
+ * @property {string} common_name
+ * @property {string} scientific_name
+ * @property {string} family_common_name
+ * @property {string} family
+ * @property {number} year
+ * @property {string} image_url
+ * @property {string[]} synonyms
+ */
+
+/**
+ * @typedef {Object} TrefleResponse
+ * @property {TreflePlant[]} data
+ * @property {Object} meta
+ * @property {Object} links
+ */
+
+// Usamos um caminho relativo para bater no nosso próprio domínio
+// Isso será interceptado pelo Vite (local) e pela Vercel (produção) para evitar CORS
+const BASE_URL = '/api/trefle'
 
 // O Trefle requer um token de acesso para funcionar.
 // Como não temos no ambiente ainda, deixamos preparado para ler do .env
