@@ -48,7 +48,6 @@ async function fetchJson(path, options = {}) {
 }
 
 function mapTrefleToProduct(plant) {
-  // A API do Trefle retorna a familia como string na lista, mas como objeto no detalhe
   const familyName = typeof plant.family === 'object' && plant.family !== null 
     ? plant.family.name 
     : plant.family
