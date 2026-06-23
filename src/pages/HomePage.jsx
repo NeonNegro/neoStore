@@ -54,11 +54,10 @@ function HomePage() {
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
-      // Ajustado: a categoria do produto (family) vem da API com inicial maiúscula ou minúscula,
-      // então normalizamos as duas strings antes de comparar.
+      // Ajustado: Compara o "slug" (family.name) exato que o select usa
       const matchesCategory =
         selectedCategory === 'todas' || 
-        (product.category && product.category.toLowerCase() === selectedCategory.toLowerCase())
+        (product.category && product.category === selectedCategory)
         
       const normalizedSearch = search.trim().toLowerCase()
       const matchesSearch =
@@ -149,11 +148,22 @@ function HomePage() {
       ) : null}
 
       {!isLoading && !errorMessage ? (
-        <Vitrine
-          title="Abertura do mercado"
-          subtitle={`${filteredProducts.length} produtos posicionados no primeiro release da loja.`}
-          products={filteredProducts}
-        />
+        filteredProducts.length > 0 ? (
+          <Vitrine
+            title="Abertura do mercado"
+            subtitle={`${filteredProducts.length} produtos posicionados no primeiro release da loja.`}
+            products={filteredProducts}
+          />
+        ) : (
+          <section className="estado-vazio">
+            <p className="eyebrow">Sem resultados</p>
+            <h1>Nenhum ativo listado.</h1>
+            <p>Nao encontramos plantas que combinem com a busca ou categoria selecionada.</p>
+            <Botao onClick={() => { setSearch(''); setSelectedCategory('todas') }}>
+              Limpar filtros
+            </Botao>
+          </section>
+        )
       ) : null}
     </>
   )
