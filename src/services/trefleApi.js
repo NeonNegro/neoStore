@@ -5,13 +5,9 @@ const BASE_URL = 'https://trefle.io/api/v1'
 const TREFLE_TOKEN = import.meta.env.VITE_TREFLE_TOKEN
 
 async function fetchJson(path, options = {}) {
-  if (!TREFLE_TOKEN) {
+  if (!TREFLE_TOKEN) 
     throw new Error('Sem token configurado para Trefle.io. Adicione VITE_TREFLE_TOKEN no .env')
-  }
 
-  // Trefle.io muitas vezes bloqueia requisicoes diretas do navegador por causa de CORS
-  // Para fins de SPA puramente front-end, usaríamos um proxy ou rota de back-end.
-  // Aqui estamos acessando direto, assumindo que a configuração de CORS permita.
   const separator = path.includes('?') ? '&' : '?'
   const targetUrl = `${BASE_URL}${path}${separator}token=${TREFLE_TOKEN}`
   
@@ -105,7 +101,7 @@ function getMockPlants() {
       description: 'Variedade muito procurada com manchas rosas vibrantes nas folhas escuras.',
       price: 450.0,
       category: 'Araceae',
-      thumbnail: 'https://images.unsplash.com/photo-1596547609652-9cb5d8d736bb?auto=format&fit=crop&q=80&w=800',
+      thumbnail: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800',
       stock: 3,
       rating: 5.0,
     },
@@ -125,7 +121,7 @@ function getMockPlants() {
       description: 'Orquídea de coleção com coloração negra/roxa intensa.',
       price: 320.0,
       category: 'Orchidaceae',
-      thumbnail: 'https://images.unsplash.com/photo-1510344565640-e224e23a39e3?auto=format&fit=crop&q=80&w=800',
+      thumbnail: 'https://images.unsplash.com/photo-1596547609652-9cb5d8d736bb?auto=format&fit=crop&q=80&w=800',
       stock: 5,
       rating: 4.7,
     }
