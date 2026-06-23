@@ -5,7 +5,7 @@ import Botao from './Botao.jsx'
 
 function Cabecalho() {
   const { isAuthenticated, logout, session } = useAuth()
-  const { totalItems } = useCart()
+  const { totalItems, openCart } = useCart()
   const getNavClassName = ({ isActive }) => (isActive ? 'is-active' : '')
 
   return (
@@ -38,7 +38,6 @@ function Cabecalho() {
       </nav>
 
       <div className="cabecalho__actions">
-        <span className="cart-pill">Carrinho {totalItems}</span>
         {isAuthenticated ? (
           <>
             <span className="cabecalho__user">
@@ -53,6 +52,15 @@ function Cabecalho() {
             <Botao>Entrar</Botao>
           </NavLink>
         )}
+
+        <button className="cart-trigger" onClick={openCart} aria-label="Abrir carrinho">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+          </svg>
+          {totalItems > 0 && <span className="cart-badge">{totalItems}</span>}
+        </button>
       </div>
     </header>
   )

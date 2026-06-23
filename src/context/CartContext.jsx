@@ -3,6 +3,7 @@ import { CartContext } from './cart-context.js'
 
 export function CartProvider({ children }) {
   const [items, setItems] = useState([])
+  const [isCartOpen, setIsCartOpen] = useState(false)
 
   const value = useMemo(() => {
     const addItem = (product) => {
@@ -17,6 +18,7 @@ export function CartProvider({ children }) {
 
         return [...currentItems, { ...product, quantity: 1 }]
       })
+      setIsCartOpen(true) // Abre o carrinho automaticamente ao adicionar item
     }
 
     const removeItem = (productId) => {
@@ -30,6 +32,8 @@ export function CartProvider({ children }) {
     }
 
     const clearCart = () => setItems([])
+    const openCart = () => setIsCartOpen(true)
+    const closeCart = () => setIsCartOpen(false)
 
     const totalItems = items.reduce((sum, item) => sum + item.quantity, 0)
     const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0)
@@ -41,8 +45,11 @@ export function CartProvider({ children }) {
       removeItem,
       totalItems,
       totalPrice,
+      isCartOpen,
+      openCart,
+      closeCart,
     }
-  }, [items])
+  }, [items, isCartOpen])
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>
 }
