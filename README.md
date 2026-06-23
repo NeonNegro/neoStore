@@ -45,19 +45,28 @@ Tambem e possivel criar uma nova conta na rota `/cadastro` (cadastro local salvo
   - Carrinho basico em Context (contagem no header, resumo na area protegida e funcionalidade de remover)
   - Identidade visual refinada com tema escuro, tipografia e iconografia (SVG) proprios.
 
-## Entrega do Projeto
+## Entrega do Projeto (GitHub + Deploy)
 
-Para enviar o trabalho como `.zip` excluindo a pasta `node_modules`, voce pode rodar no terminal (macOS/Linux):
+Como o projeto agora já tem um repositório Git inicializado na sua máquina, siga os passos abaixo para entregar:
+
+### 1. Subir para o GitHub (A forma mais simples)
+1. Acesse o [GitHub](https://github.com/new) e crie um **novo repositório** chamado `neostore` (deixe ele Público).
+2. Não marque nenhuma opção (não adicione README nem .gitignore, deixe o repositório totalmente vazio).
+3. Após criar, copie os dois comandos da segunda caixa que o GitHub mostra ("push an existing repository") e rode no seu terminal. Serão parecidos com isso:
 ```bash
-zip -r neostore.zip . -x "node_modules/*" -x ".git/*"
+git remote add origin https://github.com/SEU-USUARIO/neostore.git
+git push -u origin main
 ```
 
-### Deploy (Bônus)
+### 2. Publicar na Vercel (Ponto Extra)
+Essa é a plataforma mais simples do mundo para publicar React.
+1. Crie uma conta gratuita em [Vercel.com](https://vercel.com/signup) usando seu próprio **GitHub**.
+2. Clique no botão **"Add New..." > "Project"**.
+3. Na lista, encontre o repositório `neostore` que você acabou de criar e clique em **"Import"**.
+4. Não precisa mudar nenhuma configuração. Só clicar em **"Deploy"**.
+5. Em 1 minuto ele vai gerar o link do seu site no ar. Cole esse link na sua entrega!
 
-Se quiser ganhar os pontos de Deploy, voce pode publicar facilmente na Vercel:
-1. Crie uma conta em [vercel.com](https://vercel.com)
-2. Instale a CLI: `npm i -g vercel`
-3. Rode `vercel` na raiz do projeto e siga os passos padrao.
+*Obs: O projeto já ignora a pasta `node_modules` por padrão. Se precisar entregar por arquivo `.zip`, basta rodar `zip -r neostore.zip . -x "node_modules/*" -x ".git/*"` no terminal.*
 
 ## Prints
 

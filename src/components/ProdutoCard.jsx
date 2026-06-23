@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useCart } from '../context/useCart.jsx'
-import { formatCategoryLabel } from '../services/dummyJson.js'
+import { formatCategoryLabel } from '../services/trefleApi.js'
 import { formatCurrency } from '../utils/formatters.js'
 import Botao from './Botao.jsx'
 import Selo from './Selo.jsx'
@@ -20,7 +20,7 @@ function ProdutoCard({ product }) {
 
       <div className="produto-card__content">
         <div className="produto-card__meta">
-          <Selo tone="accent">{product.brand || 'DummyJSON'}</Selo>
+          <Selo tone="accent">{product.brand || 'Trefle.io'}</Selo>
           <span className="produto-card__category">
             {formatCategoryLabel(product.category)}
           </span>
