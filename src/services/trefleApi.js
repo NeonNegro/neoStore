@@ -1,3 +1,5 @@
+import fallbackData from '../data/trefle-fallback.json'
+
 const BASE_URL = 'https://trefle.io/api/v1'
 
 // O Trefle requer um token de acesso para funcionar.
@@ -50,7 +52,7 @@ export function formatCategoryLabel(category) {
 
 export async function getProducts() {
   if (!TREFLE_TOKEN) {
-    return getMockPlants()
+    return (fallbackData.data ?? []).map(mapTrefleToProduct)
   }
 
   try {
@@ -58,13 +60,14 @@ export async function getProducts() {
     return (data.data ?? []).map(mapTrefleToProduct)
   } catch (err) {
     console.error("Falha ao buscar Trefle:", err)
-    return getMockPlants()
+    return (fallbackData.data ?? []).map(mapTrefleToProduct)
   }
 }
 
 export async function getProductById(productId) {
   if (!TREFLE_TOKEN) {
-    return getMockPlants().find((p) => p.id === Number(productId))
+    const plant = (fallbackData.data ?? []).find((p) => p.id === Number(productId))
+    return plant ? mapTrefleToProduct(plant) : null
   }
 
   try {
@@ -72,17 +75,20 @@ export async function getProductById(productId) {
     return mapTrefleToProduct(data.data)
   } catch (err) {
     console.error("Falha ao buscar Trefle id:", err)
-    return getMockPlants().find((p) => p.id === Number(productId)) || null
+    const plant = (fallbackData.data ?? []).find((p) => p.id === Number(productId))
+    return plant ? mapTrefleToProduct(plant) : null
   }
 }
 
 export async function getCategories() {
-  const fallback = [
-    { label: 'Araceae', slug: 'Araceae' },
-    { label: 'Orchidaceae', slug: 'Orchidaceae' },
-    { label: 'Moraceae', slug: 'Moraceae' },
-  ]
-  if (!TREFLE_TOKEN) return fallback
+  const uniqueFamilies = Array.from(
+    new Set((fallbackData.data ?? []).map((p) => p.family).filter(Boolean))
+  ).map((family) => ({
+    label: family,
+    slug: family,
+  }))
+
+  if (!TREFLE_TOKEN) return uniqueFamilies
 
   try {
     const data = await fetchJson('/families')
@@ -92,52 +98,8 @@ export async function getCategories() {
     }))
   } catch (err) {
     console.error("Falha ao buscar Trefle familias:", err)
-    return fallback
+    return uniqueFamilies
   }
 }
 
-// Fallback Mock de plantas para o app nao quebrar sem token
-function getMockPlants() {
-  return [
-    {
-      id: 101,
-      title: 'Monstera Deliciosa',
-      description: 'Uma planta icônica de folhas furadas, excelente para ambientes internos com boa luz indireta.',
-      price: 180.5,
-      category: 'Araceae',
-      thumbnail: 'https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&q=80&w=800',
-      stock: 15,
-      rating: 4.9,
-    },
-    {
-      id: 102,
-      title: 'Philodendron Pink Princess',
-      description: 'Variedade muito procurada com manchas rosas vibrantes nas folhas escuras.',
-      price: 450.0,
-      category: 'Araceae',
-      thumbnail: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800',
-      stock: 3,
-      rating: 5.0,
-    },
-    {
-      id: 103,
-      title: 'Ficus Elastica Albo',
-      description: 'Ficus clássico com variação de cores incríveis entre branco e verde claro.',
-      price: 210.0,
-      category: 'Moraceae',
-      thumbnail: 'https://images.unsplash.com/photo-1600411832986-5a4477b64a1c?auto=format&fit=crop&q=80&w=800',
-      stock: 8,
-      rating: 4.5,
-    },
-    {
-      id: 104,
-      title: 'Phalaenopsis Rara',
-      description: 'Orquídea de coleção com coloração negra/roxa intensa.',
-      price: 320.0,
-      category: 'Orchidaceae',
-      thumbnail: 'https://images.unsplash.com/photo-1596547609652-9cb5d8d736bb?auto=format&fit=crop&q=80&w=800',
-      stock: 5,
-      rating: 4.7,
-    }
-  ]
-}
+

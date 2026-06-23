@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 101,
+      "common_name": "Monstera Deliciosa",
+      "scientific_name": "Monstera deliciosa",
+      "family_common_name": "Arum family",
+      "family": "Araceae",
+      "year": 1840,
+      "image_url": "https://images.unsplash.com/photo-1614594975525-e45190c55d0b?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      "id": 102,
+      "common_name": "Philodendron Pink Princess",
+      "scientific_name": "Philodendron erubescens",
+      "family_common_name": "Arum family",
+      "family": "Araceae",
+      "year": 1854,
+      "image_url": "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      "id": 103,
+      "common_name": "Ficus Elastica Albo",
+      "scientific_name": "Ficus elastica",
+      "family_common_name": "Mulberry family",
+      "family": "Moraceae",
+      "year": 1819,
+      "image_url": "https://images.unsplash.com/photo-1600411832986-5a4477b64a1c?auto=format&fit=crop&q=80&w=800"
+    },
+    {
+      "id": 104,
+      "common_name": "Phalaenopsis Rara",
+      "scientific_name": "Phalaenopsis aphrodite",
+      "family_common_name": "Orchid family",
+      "family": "Orchidaceae",
+      "year": 1862,
+      "image_url": "https://images.unsplash.com/photo-1596547609652-9cb5d8d736bb?auto=format&fit=crop&q=80&w=800"
+    }
+  ]
+}
