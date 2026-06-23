@@ -1,4 +1,6 @@
-# Verdil
+# Verdil - Mercado de Plantas Premium
+
+**Deploy do projeto:** [https://neo-store-kappa.vercel.app/](https://neo-store-kappa.vercel.app/)
 
 Loja SPA (React + Vite) com identidade escura premium e proposta de “bolsa botanica”: um catalogo para plantas ornamentais (curadoria para colecionadores), com vitrine, detalhe, autenticacao e rota protegida.
 
