@@ -54,13 +54,17 @@ function HomePage() {
 
   const filteredProducts = useMemo(() => {
     return products.filter((product) => {
+      // Ajustado: a categoria do produto (family) vem da API com inicial maiúscula ou minúscula,
+      // então normalizamos as duas strings antes de comparar.
       const matchesCategory =
-        selectedCategory === 'todas' || product.category === selectedCategory
+        selectedCategory === 'todas' || 
+        (product.category && product.category.toLowerCase() === selectedCategory.toLowerCase())
+        
       const normalizedSearch = search.trim().toLowerCase()
       const matchesSearch =
         !normalizedSearch ||
-        product.title.toLowerCase().includes(normalizedSearch) ||
-        product.description.toLowerCase().includes(normalizedSearch)
+        (product.title && product.title.toLowerCase().includes(normalizedSearch)) ||
+        (product.description && product.description.toLowerCase().includes(normalizedSearch))
 
       return matchesCategory && matchesSearch
     })

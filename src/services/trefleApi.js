@@ -19,12 +19,8 @@ import fallbackData from '../data/trefle-fallback.json'
  * @property {Object} links
  */
 
-// Usamos um caminho relativo para bater no nosso próprio domínio
-// Isso será interceptado pelo Vite (local) e pela Vercel (produção) para evitar CORS
 const BASE_URL = '/api/trefle'
 
-// O Trefle requer um token de acesso para funcionar.
-// Como não temos no ambiente ainda, deixamos preparado para ler do .env
 const TREFLE_TOKEN = import.meta.env.VITE_TREFLE_TOKEN
 
 async function fetchJson(path, options = {}) {
