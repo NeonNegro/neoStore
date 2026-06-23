@@ -53,8 +53,13 @@ export async function getProducts() {
     return getMockPlants()
   }
 
-  const data = await fetchJson('/plants')
-  return (data.data ?? []).map(mapTrefleToProduct)
+  try {
+    const data = await fetchJson('/plants')
+    return (data.data ?? []).map(mapTrefleToProduct)
+  } catch (err) {
+    console.error("Falha ao buscar Trefle:", err)
+    return getMockPlants()
+  }
 }
 
 export async function getProductById(productId) {
@@ -62,24 +67,33 @@ export async function getProductById(productId) {
     return getMockPlants().find((p) => p.id === Number(productId))
   }
 
-  const data = await fetchJson(`/plants/${productId}`)
-  return mapTrefleToProduct(data.data)
+  try {
+    const data = await fetchJson(`/plants/${productId}`)
+    return mapTrefleToProduct(data.data)
+  } catch (err) {
+    console.error("Falha ao buscar Trefle id:", err)
+    return getMockPlants().find((p) => p.id === Number(productId)) || null
+  }
 }
 
 export async function getCategories() {
-  if (!TREFLE_TOKEN) {
-    return [
-      { label: 'Araceae', slug: 'Araceae' },
-      { label: 'Orchidaceae', slug: 'Orchidaceae' },
-      { label: 'Moraceae', slug: 'Moraceae' },
-    ]
-  }
+  const fallback = [
+    { label: 'Araceae', slug: 'Araceae' },
+    { label: 'Orchidaceae', slug: 'Orchidaceae' },
+    { label: 'Moraceae', slug: 'Moraceae' },
+  ]
+  if (!TREFLE_TOKEN) return fallback
 
-  const data = await fetchJson('/families')
-  return (data.data ?? []).slice(0, 10).map((family) => ({
-    label: family.common_name || family.name,
-    slug: family.name,
-  }))
+  try {
+    const data = await fetchJson('/families')
+    return (data.data ?? []).slice(0, 10).map((family) => ({
+      label: family.common_name || family.name,
+      slug: family.name,
+    }))
+  } catch (err) {
+    console.error("Falha ao buscar Trefle familias:", err)
+    return fallback
+  }
 }
 
 // Fallback Mock de plantas para o app nao quebrar sem token

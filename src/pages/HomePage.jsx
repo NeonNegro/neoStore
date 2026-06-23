@@ -25,24 +25,18 @@ function HomePage() {
           getCategories(),
         ])
 
-        if (!isMounted) {
-          return
-        }
+        if (!isMounted) return;
 
         setProducts(nextProducts)
         setCategories(nextCategories)
       } catch (error) {
-        if (!isMounted) {
-          return
-        }
+        if (!isMounted) return
 
         setErrorMessage(
           error.message || 'Nao foi possivel carregar os produtos da Verdil agora.',
         )
       } finally {
-        if (isMounted) {
-          setIsLoading(false)
-        }
+        if (isMounted) setIsLoading(false)
       }
     }
 
