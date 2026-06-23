@@ -48,12 +48,17 @@ async function fetchJson(path, options = {}) {
 }
 
 function mapTrefleToProduct(plant) {
+  // A API do Trefle retorna a familia como string na lista, mas como objeto no detalhe
+  const familyName = typeof plant.family === 'object' && plant.family !== null 
+    ? plant.family.name 
+    : plant.family
+
   return {
     id: plant.id,
     title: plant.common_name || plant.scientific_name || 'Planta Rara',
-    description: `Família: ${plant.family_common_name || plant.family || 'Desconhecida'}. Ano: ${plant.year || 'N/D'}.`,
+    description: `Família: ${plant.family_common_name || familyName || 'Desconhecida'}. Ano: ${plant.year || 'N/D'}.`,
     price: 150 + (plant.id % 500), // Preço ficticio gerado a partir do ID
-    category: plant.family || 'Geral',
+    category: familyName || 'Geral',
     thumbnail: plant.image_url || 'https://images.unsplash.com/photo-1596547609652-9cb5d8d736bb?auto=format&fit=crop&q=80&w=800',
     stock: 10,
     rating: 4.8,
@@ -61,6 +66,7 @@ function mapTrefleToProduct(plant) {
 }
 
 export function formatCategoryLabel(category) {
+  if (!category || typeof category !== 'string') return 'Geral'
   return category
     .split('-')
     .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
